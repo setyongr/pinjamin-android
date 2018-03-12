@@ -1,0 +1,32 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/primaryTextColor</item>
+        <item name="actionMenuTextColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlayBlack" parent="AppTheme.AppBarOverlay">
+        <item name="colorControlNormal">@color/colorTextGrey</item>
+        <item name="android:textColorPrimary">@color/colorTextGrey</item>
+        <item name="android:textColorSecondary">@color/colorTextGrey</item>
+        <item name="actionMenuTextColor">@color/colorTextGrey</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="CollapsingTextAppearance" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+
+    <style name="CollapsingTextAppearance.TitleSize" >
+        <item name="android:textSize">30sp</item>
+        <item name="android:fontFamily">@font/lato</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+</resources>

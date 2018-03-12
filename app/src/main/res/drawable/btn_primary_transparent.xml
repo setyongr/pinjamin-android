@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- PRESSED -->
+    <item android:state_enabled="true" android:state_pressed="true">
+        <shape>
+            <stroke android:color="@color/secondaryDarkColor" android:width="1.5dp"/>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <!-- UNPRESSED -->
+    <item android:state_enabled="true" android:state_pressed="false">
+        <shape>
+            <stroke android:color="@color/secondaryColor" android:width="1.5dp"/>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <!-- DISABLED -->
+    <item  android:state_enabled="false" >
+        <shape>
+            <stroke android:color="@color/colorDisable" android:width="1.5dp"/>
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+</selector>

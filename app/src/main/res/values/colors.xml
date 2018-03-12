@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColor">#ffffff</color>
+    <color name="primaryLightColor">#ffffff</color>
+    <color name="primaryDarkColor">#cccccc</color>
+    <color name="secondaryColor">#5983f0</color>
+    <color name="primaryColorAplha">#aaffffff</color>
+    <color name="secondaryColorAlpha">#c85983f0</color>
+    <color name="secondaryLightColor">#91b2ff</color>
+    <color name="secondaryDarkColor">#0357bd</color>
+    <color name="primaryTextColor">#5983f0</color>
+    <color name="secondaryTextColor">#ffffff</color>
+    <color name="colorTernary">#0c75d7</color>
+    <color name="colorTernaryPressed">#0d68be</color>
+    <color name="colorError">#f9a825</color>
+    <color name="colorLine">#424242</color>
+    <color name="colorGreyDark">#636363</color>
+    <color name="colorDisable">#d7ccc8</color>
+    <color name="colorLightGrey">#CACACA</color>
+    <color name="colorBackgroundGrey">#f4f4f4</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorFacebook">#3b5998</color>
+    <color name="colorFacebookPressed">#224796</color>
+    <color name="colorSuccess">#7ed321</color>
+    <color name="colorTextGrey">#8b8b8b</color>
+    <color name="colorGreyOverlay">#964d4d4d</color>
+    <color name="colorGreen">#00B873</color>
+    <color name="colorOrange">#F68159</color>
+    <color name="colorRed">#FF4081</color>
+
+</resources>

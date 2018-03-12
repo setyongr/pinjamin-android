@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="16dp">
+    <!-- A CardView that contains a TextView -->
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+
+        card_view:cardCornerRadius="10dp">
+
+       <android.support.constraint.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <ImageView
+               android:id="@+id/sewa_image"
+               android:layout_width="0dp"
+               android:layout_height="100dp"
+               android:scaleType="centerCrop"
+               card_view:layout_constraintEnd_toEndOf="parent"
+               card_view:layout_constraintStart_toStartOf="parent"
+               card_view:layout_constraintTop_toTopOf="parent"
+               card_view:srcCompat="@drawable/ic_launcher_background" />
+
+           <TextView
+               android:id="@+id/user_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="8dp"
+               android:layout_marginEnd="8dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:paddingRight="10dp"
+               android:paddingTop="5dp"
+               android:paddingBottom="5dp"
+               android:background="@drawable/gray_rect"
+               android:textColor="@color/primaryColor"
+               android:drawableLeft="@drawable/ic_person_white_8dp"
+               android:drawablePadding="5dp"
+               android:text="Setyo Nu"
+               android:textSize="10sp"
+               card_view:layout_constraintBottom_toBottomOf="@+id/sewa_image"
+               card_view:layout_constraintEnd_toEndOf="@+id/sewa_image" />
+
+           <TextView
+               android:id="@+id/name_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="24dp"
+               android:layout_marginTop="16dp"
+               android:text="Sewa motor gaul"
+               android:textStyle="bold"
+               card_view:layout_constraintStart_toStartOf="parent"
+               card_view:layout_constraintTop_toBottomOf="@+id/sewa_image" />
+
+           <TextView
+               android:id="@+id/distance_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="16dp"
+               android:layout_marginStart="24dp"
+               android:layout_marginTop="8dp"
+               android:drawableLeft="@drawable/ic_location_on_black_24dp"
+               android:gravity="center"
+               android:text="1Km"
+               android:textSize="10sp"
+               card_view:layout_constraintBottom_toBottomOf="parent"
+               card_view:layout_constraintStart_toStartOf="parent"
+               card_view:layout_constraintTop_toBottomOf="@+id/name_text" />
+
+       </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
