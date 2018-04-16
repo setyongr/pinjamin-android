@@ -16,6 +16,9 @@ import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AlertDialog
+import android.view.View
+import com.setyongr.pinjamin.common.loadUrl
+import com.setyongr.pinjamin.data.models.OrderStatus
 import com.setyongr.pinjamin.data.models.RequestModel
 import kotlinx.android.synthetic.main.activity_order_to_me_detail.*
 
@@ -37,7 +40,7 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.title = "Order Detail"
+        supportActionBar?.title = ""
 
 
         id = intent.extras.getInt("id")
@@ -89,7 +92,7 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun accept() {
         showLoading(true)
-        service.updateOrderToMe(id, RequestModel.OrderToMe(1))
+        service.updateOrderToMe(id, RequestModel.OrderToMe(OrderStatus.Accepted()))
                 .applyDefaultSchedulers(schedulerProvider)
                 .subscribeBy(
                         onComplete = {
@@ -117,7 +120,7 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun reject() {
         showLoading(true)
-        service.updateOrderToMe(id, RequestModel.OrderToMe(-1))
+        service.updateOrderToMe(id, RequestModel.OrderToMe(OrderStatus.Rejected()))
                 .applyDefaultSchedulers(schedulerProvider)
                 .subscribeBy(
                         onComplete = {
@@ -145,10 +148,20 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun show(data: ResponseModel.Order) {
         order = data
-        title_text.text = data.pinjam.name
-        byuser_text.text = data.user.username
+        penyewa_text.text = data.user.name
+        username_text.text = data.user.username
+        email_text.text = data.user.email
+        hp_text.text = data.user.noHp
+        avatar_image.loadUrl(data.user.avatar)
         verified_text.text = if (data.user.verified) "Verified" else "Not Verified"
         message_text.text = data.message
+
+        when (order?.status) {
+            is OrderStatus.Accepted, is OrderStatus.Rejected-> {
+                accept_button.visibility = View.GONE
+                reject_button.visibility = View.GONE
+            }
+        }
     }
 
 

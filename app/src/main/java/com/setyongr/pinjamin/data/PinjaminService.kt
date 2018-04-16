@@ -56,6 +56,14 @@ interface PinjaminService {
             @Part("deskripsi") deskripsi: String,
             @Part part: MultipartBody.Part? = null): Observable<ResponseModel.Pinjaman>
 
+    @Multipart
+    @PATCH("pinjaman/{id}/")
+    fun updatePinjaman(
+            @Path("id") id: Int,
+            @Part("name") name: String,
+            @Part("deskripsi") deskripsi: String,
+            @Part part: MultipartBody.Part? = null): Observable<ResponseModel.Pinjaman>
+
     @GET("auth/me/")
     fun me(): Observable<ResponseModel.User>
 

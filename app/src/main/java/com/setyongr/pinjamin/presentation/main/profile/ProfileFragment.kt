@@ -72,17 +72,25 @@ class ProfileFragment: BaseInjectedFragment(), ProfileView {
                     })
             dialog.show()
         }
+
+        btn_refresh.setOnClickListener {
+            mPresenter.refreshUser()
+        }
+
+        mPresenter.refreshUserSilent()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         mPresenter.detachView()
     }
-    private fun loadUser() {
+    private fun loadUser(changeImage: Boolean = true) {
         adapter.clear()
         val user = appState.getUser()
         text_username.text = user?.name
-        profile_image.loadUrl(user?.avatar)
+
+        if (changeImage) profile_image.loadUrl(user?.avatar)
+
         adapter.add(ProfileMenuItem("Username", user?.username))
         adapter.add(ProfileMenuItem("Nama", user?.name, {
             showEditDialog(EditProfileDialog.NAME_TYPE)
@@ -131,8 +139,8 @@ class ProfileFragment: BaseInjectedFragment(), ProfileView {
         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun onSuccess() {
-        loadUser()
+    override fun onSuccess(refreshImage: Boolean) {
+        loadUser(refreshImage)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

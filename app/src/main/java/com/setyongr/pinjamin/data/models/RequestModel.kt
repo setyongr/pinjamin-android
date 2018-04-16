@@ -1,5 +1,8 @@
 package com.setyongr.pinjamin.data.models
 
+import com.google.gson.annotations.JsonAdapter
+import com.setyongr.pinjamin.data.adapter.OrderStatusAdapter
+
 class RequestModel {
     data class Login(
             val username: String,
@@ -7,6 +10,7 @@ class RequestModel {
     )
 
     data class Register(
+            val name: String,
             val username: String,
             val email: String,
             val password: String
@@ -24,6 +28,7 @@ class RequestModel {
     )
 
     data class OrderToMe(
-            val status: Int
+            @JsonAdapter(OrderStatusAdapter::class)
+            val status: OrderStatus
     )
 }

@@ -9,6 +9,7 @@ import com.setyongr.pinjamin.data.TokenProvider
 import com.setyongr.pinjamin.data.models.RequestModel
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class SignInPresenter @Inject constructor(
@@ -35,7 +36,12 @@ class SignInPresenter @Inject constructor(
                         onError = {
                             it.printStackTrace()
                             getView().showLoading(false)
-                            getView().showToast("Error")
+                            if (it is HttpException) {
+                                if (it.code() == 400) {
+                                    getView().showToast("Error! Please check your credentials")
+                                }
+                            }
+                            getView().showToast("Failed to Sign In")
                         }
                 )
 

@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import com.setyongr.pinjamin.common.ConfigKey
 import com.setyongr.pinjamin.common.ObservableMap
 import com.setyongr.pinjamin.data.models.ResponseModel
+import io.reactivex.subjects.BehaviorSubject
+import java.util.*
 import javax.inject.Inject
 
 class AppState @Inject constructor(
@@ -15,6 +17,8 @@ class AppState @Inject constructor(
     val myPinjaman = ObservableMap<Int, ResponseModel.Pinjaman>()
     val myOrder = ObservableMap<Int, ResponseModel.Order>()
     val orderToMe = ObservableMap<Int, ResponseModel.Order>()
+
+    val latestTime = BehaviorSubject.create<Date>()
 
     val latestPage = 0
 

@@ -1,6 +1,8 @@
 package com.setyongr.pinjamin.presentation.pinjamin.mypinjaman
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
@@ -10,7 +12,8 @@ import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.MyPinjamanAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.setyongr.pinjamin.presentation.pinjamin.addpinjaman.AddPinjamanActivity
+import kotlinx.android.synthetic.main.fragment_my_pinjaman.*
 import javax.inject.Inject
 
 class MyPinjamanFragment: BaseInjectedFragment(), MyPinjamanView {
@@ -25,7 +28,7 @@ class MyPinjamanFragment: BaseInjectedFragment(), MyPinjamanView {
     override fun onResume() {
         super.onResume()
         mPresenter.attachView(this)
-//        mPresenter.load()
+        mPresenter.load()
     }
 
     override fun onDestroy() {
@@ -33,7 +36,7 @@ class MyPinjamanFragment: BaseInjectedFragment(), MyPinjamanView {
         mPresenter.detachView()
     }
 
-    override fun getLayout(): Int = R.layout.fragment_home
+    override fun getLayout(): Int = R.layout.fragment_my_pinjaman
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +55,10 @@ class MyPinjamanFragment: BaseInjectedFragment(), MyPinjamanView {
         }
 
         mPresenter.load()
+
+        fab.setOnClickListener {
+            context?.startActivity(Intent(context, AddPinjamanActivity::class.java))
+        }
     }
 
     override fun injectModule(activityComponent: ActivityComponent) {

@@ -12,8 +12,10 @@ import io.reactivex.Observable
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.setyongr.pinjamin.base.BaseActivity
 import io.reactivex.Completable
+import okhttp3.ResponseBody
 
 
 fun <T> Observable<T>.applyDefaultSchedulers(provider: SchedulerProvider) =
@@ -47,4 +49,9 @@ fun ImageView.loadUrl(url: String?) {
                 .load(url)
                 .into(this)
     }
+}
+
+inline fun <reified T> ResponseBody.parse(): T {
+    val adapter = Gson()
+    return adapter.fromJson(this.string(), T::class.java)
 }

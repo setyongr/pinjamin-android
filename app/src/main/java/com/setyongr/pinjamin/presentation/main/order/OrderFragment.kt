@@ -10,7 +10,7 @@ import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.OrderAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_order.*
 import javax.inject.Inject
 
 class OrderFragment: BaseInjectedFragment(), OrderView {
@@ -65,6 +65,10 @@ class OrderFragment: BaseInjectedFragment(), OrderView {
     }
 
     override fun addOrder(order: ResponseModel.Order) {
+        if (no_order.visibility == View.VISIBLE) {
+            no_order.visibility = View.GONE
+        }
+
         adapter.add(order)
     }
 

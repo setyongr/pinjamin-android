@@ -1,5 +1,6 @@
 package com.setyongr.pinjamin.presentation.mydetail
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -15,17 +16,39 @@ import com.setyongr.pinjamin.injection.component.ActivityComponent
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.v7.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_detail_my.*
+import java.io.File
 
 
-class MyDetailActivity: BaseInjectedActivity() {
+class MyDetailActivity: BaseInjectedActivity(), MyDetailView {
+    override fun showError(e: Throwable) {
+        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showImage(file: File) {
+        pinjam_image.setImageBitmap(BitmapFactory.decodeFile(file.path))
+    }
+
+    override fun onSuccess() {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("Success")
+                .setMessage("Operation Success")
+                .setPositiveButton("OK") {
+                    dialogInterface: DialogInterface, _: Int ->
+                    dialogInterface.dismiss()
+
+                    finish()
+                }
+                .create()
+
+        dialog.show()
+    }
+
     @Inject
-    lateinit var service: PinjaminService
-
-    @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var mPresenter: MyDetailPresenter
 
     var progress: ProgressDialog? = null
     private var id: Int = 0
@@ -33,78 +56,55 @@ class MyDetailActivity: BaseInjectedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_my)
+        mPresenter.attachView(this)
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.title = ""
 
 
         id = intent.extras.getInt("id")
+        mPresenter.load(id)
 
-        load()
-
-        delete.setOnClickListener {
-            delete()
+        save_button.setOnClickListener {
+            mPresenter.save(id, title_input.editText?.text.toString(), description_input.editText?.text.toString())
         }
 
+        delete_button.setOnClickListener {
+            mPresenter.delete(id)
+        }
+
+        pinjam_image.setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
+                    .setTitle("Update Gambar")
+                    .setItems(arrayOf("Camera", "Gallery", "Cancel"), {
+                        dialogInterface: DialogInterface, i: Int ->
+                        when(i){
+                            0 -> {
+                                mPresenter.pickCamera(Activity.RESULT_OK)
+                            }
+                            1 -> {
+                                mPresenter.pickGallery(Activity.RESULT_OK)
+                            }
+                            2 -> {
+                                dialogInterface.dismiss()
+                            }
+                        }
+                    })
+            dialog.show()
+        }
     }
 
-    fun showLoading(status: Boolean) {
+    override fun showLoading(status: Boolean) {
         progress?.dismiss()
         if (status) {
             progress = ProgressDialog.show(this, "Loading", "Please wait...", true, false)
         }
     }
-
-    fun load() {
-        showLoading(true)
-        service.getPinjamanById(id)
-                .applyDefaultSchedulers(schedulerProvider)
-                .subscribeBy(
-                        onNext = {
-                            showLoading(false)
-                            show(it)
-                        },
-                        onError = {
-                            it.printStackTrace()
-                            showLoading(false)
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                        }
-                )
-    }
-
-    fun delete() {
-        showLoading(true)
-        service.deleteMyPinjaman(id)
-                .applyDefaultSchedulers(schedulerProvider)
-                .subscribeBy(
-                        onComplete = {
-                            showLoading(false)
-                            val dialog = AlertDialog.Builder(this)
-                                    .setTitle("Success")
-                                    .setMessage("Deleted")
-                                    .setPositiveButton("OK") {
-                                        dialogInterface: DialogInterface, _: Int ->
-                                        dialogInterface.dismiss()
-
-                                        finish()
-                                    }
-                                    .create()
-
-                            dialog.show()
-                        },
-                        onError = {
-                            it.printStackTrace()
-                            showLoading(false)
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                        }
-                )
-    }
-
-    fun show(data: ResponseModel.Pinjaman) {
-        collapsingToolbar.title = data.name
-        overview.text = data.deskripsi
-        backdrop.loadUrl(data.image)
-        poster.loadUrl(data.image)
+    override fun show(pinjaman: ResponseModel.Pinjaman) {
+        title_input.editText?.setText(pinjaman.name)
+        description_input.editText?.setText(pinjaman.deskripsi)
+        pinjam_image.loadUrl(pinjaman.image)
     }
 
 

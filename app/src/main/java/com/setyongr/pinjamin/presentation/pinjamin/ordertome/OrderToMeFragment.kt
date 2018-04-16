@@ -18,14 +18,12 @@ class OrderToMeFragment: BaseInjectedFragment(), OrderToMeView {
     @Inject
     lateinit var mPresenter: OrderToMePresenter
 
-    val adapter by lazy {
-        OrderToMeAdapter()
-    }
+    @Inject
+    lateinit var adapter: OrderToMeAdapter
 
     override fun onResume() {
         super.onResume()
         mPresenter.attachView(this)
-//        mPresenter.load()
     }
 
     override fun onDestroy() {
@@ -33,7 +31,7 @@ class OrderToMeFragment: BaseInjectedFragment(), OrderToMeView {
         mPresenter.detachView()
     }
 
-    override fun getLayout(): Int = R.layout.fragment_home
+    override fun getLayout(): Int = R.layout.fragment_order_to_me
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

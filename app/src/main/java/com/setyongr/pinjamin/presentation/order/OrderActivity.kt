@@ -54,7 +54,6 @@ class OrderActivity: BaseInjectedActivity() {
         order_button.setOnClickListener {
             save()
         }
-
     }
 
     fun showLoading(status: Boolean) {

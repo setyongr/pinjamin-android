@@ -102,7 +102,9 @@ ext {
 
     utils = [
             "compressor": "id.zelory:compressor:2.1.0",
-            "cicleImage": "de.hdodenhof:circleimageview:2.2.0"
+            "cicleImage": "de.hdodenhof:circleimageview:2.2.0",
+            "jodaTime": "joda-time:joda-time:2.9.9",
+            "chatkit": "com.github.stfalcon:chatkit:0.2.2"
     ]
 
     supportLibs = supportDeps.values()

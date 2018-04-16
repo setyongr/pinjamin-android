@@ -1,24 +1,36 @@
 package com.setyongr.pinjamin.presentation.pinjamin
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
-import com.setyongr.pinjamin.presentation.pinjamin.addpinjaman.AddPinjamanFragment
+import com.setyongr.pinjamin.base.BaseInjectedActivity
+import com.setyongr.pinjamin.data.AppState
+import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.pinjamin.mypinjaman.MyPinjamanFragment
 import com.setyongr.pinjamin.presentation.pinjamin.ordertome.OrderToMeFragment
 import kotlinx.android.synthetic.main.activity_pinjamin.*
+import java.util.*
+import javax.inject.Inject
 
-class PinjaminActivity: BaseActivity() {
+class PinjaminActivity: BaseInjectedActivity() {
     val fragments by lazy {
         mapOf<String, Fragment>(
-                "Pinjamkan" to AddPinjamanFragment(),
                 "Pinjamanku" to MyPinjamanFragment(),
                 "Orderku" to OrderToMeFragment()
         )
     }
+
+    @Inject
+    lateinit var appState: AppState
+
+    private var broadcastReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +42,37 @@ class PinjaminActivity: BaseActivity() {
 
         viewpager.adapter = PinjamPagerAdapter(supportFragmentManager)
         tabs.setupWithViewPager(viewpager)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Get updateing time
+        if (!appState.latestTime.hasValue()) {
+            appState.latestTime.onNext(Date())
+        }
+
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(ctx: Context?, intent: Intent?) {
+                if (intent?.action?.compareTo(Intent.ACTION_TIME_TICK) == 0) {
+                    appState.latestTime.onNext(Date())
+                }
+            }
+
+        }
+
+        registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver)
+        }
+    }
+
+    override fun injectModule(activityComponent: ActivityComponent) {
+        activityComponent.inject(this)
     }
 
     inner class PinjamPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

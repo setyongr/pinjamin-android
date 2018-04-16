@@ -1,5 +1,8 @@
 package com.setyongr.pinjamin.data.models
 
+import com.google.gson.annotations.JsonAdapter
+import com.setyongr.pinjamin.data.adapter.OrderStatusAdapter
+
 class ResponseModel {
     data class Token (
             val token: String
@@ -27,7 +30,7 @@ class ResponseModel {
             val id: Int,
             val deskripsi: String,
             val name: String,
-            val image: String,
+            val image: String?,
             val user: User
     )
 
@@ -36,10 +39,18 @@ class ResponseModel {
             val user: User,
             val pinjam: Pinjaman,
             val message: String,
-            val status: Int,
-            val created_at: String,
-            val updated_at: String,
+            @JsonAdapter(OrderStatusAdapter::class)
+            val status: OrderStatus,
+            val crated_at: String?,
+            val updated_at: String?,
             val used_at: String?,
             val finished_at: String?
+    )
+
+    data class SignUpError(
+            val name: List<String>? = null,
+            val email: List<String>? = null,
+            val username: List<String>? = null,
+            val password: List<String>? = null
     )
 }

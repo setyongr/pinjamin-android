@@ -90,4 +90,39 @@ class ProfilePresenter @Inject constructor(
                         }
                 )
     }
+
+    fun refreshUser() {
+        getView().showLoading(true)
+        disposables += service.me()
+                .applyDefaultSchedulers(schedulerProvider)
+                .subscribeBy(
+                        onNext = {
+                            getView().showLoading(false)
+                            appState.saveUser(it)
+                            getView().onSuccess()
+                        },
+                        onError = {
+                            it.printStackTrace()
+                            if (it is HttpException) {
+                                println(it.response().errorBody()?.string())
+                            }
+                            getView().showLoading(false)
+                            getView().showError(it)
+                        }
+                )
+    }
+
+    fun refreshUserSilent() {
+        disposables += service.me()
+                .applyDefaultSchedulers(schedulerProvider)
+                .subscribeBy(
+                        onNext = {
+                            appState.saveUser(it)
+                            getView().onSuccess(false)
+                        },
+                        onError = {
+                            it.printStackTrace()
+                        }
+                )
+    }
 }

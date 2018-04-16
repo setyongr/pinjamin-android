@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_pinjaman.view.*
 
 class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val data = mutableListOf<ResponseModel.Pinjaman>()
+    val data = mutableMapOf<Int, ResponseModel.Pinjaman>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_pinjaman))
@@ -24,11 +24,11 @@ class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
-        (holder as ViewHolder).bind(data[position])
+        (holder as ViewHolder).bind(data.values.toList()[position])
     }
 
     fun add(pinjaman: ResponseModel.Pinjaman) {
-        data.add(pinjaman)
+        data[pinjaman.id] = pinjaman
         notifyDataSetChanged()
     }
 

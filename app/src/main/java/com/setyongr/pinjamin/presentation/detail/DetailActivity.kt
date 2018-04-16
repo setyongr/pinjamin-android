@@ -24,6 +24,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewCompat
 import android.util.Log
+import android.view.View
+import com.setyongr.pinjamin.data.AppState
 import com.setyongr.pinjamin.presentation.order.OrderActivity
 
 
@@ -34,8 +36,13 @@ class DetailActivity: BaseInjectedActivity() {
     @Inject
     lateinit var schedulerProvider: SchedulerProvider
 
+    @Inject
+    lateinit var appState: AppState
+
     var progress: ProgressDialog? = null
     private var id: Int = 0
+
+    val HIDE_ORDER = "hide_order"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +77,10 @@ class DetailActivity: BaseInjectedActivity() {
             val intent = Intent(this, OrderActivity::class.java)
             intent.putExtra("id", id)
             move(intent, finishActivity = true)
+        }
+
+        if (intent?.hasExtra(HIDE_ORDER) == true) {
+            order_card.visibility = View.INVISIBLE
         }
     }
 
@@ -108,6 +119,10 @@ class DetailActivity: BaseInjectedActivity() {
         hp.text = data.user.noHp
         verified.text = if (data.user.verified == true) "Terverifikasi" else "Belum"
         avatar_image.loadUrl(data.user.avatar)
+
+        if (data.user.id == appState.getUser()?.id) {
+            order_card.visibility = View.INVISIBLE
+        }
     }
 
     fun sendEmail() {

@@ -24,6 +24,9 @@ class HomeFragment: BaseInjectedFragment(), HomeView {
     override fun onResume() {
         super.onResume()
         mPresenter.attachView(this)
+        adapter.clear()
+        mPresenter.load()
+
     }
 
     override fun onStop() {
@@ -48,8 +51,6 @@ class HomeFragment: BaseInjectedFragment(), HomeView {
             mPresenter.clear()
             mPresenter.getRemote()
         }
-
-        mPresenter.load()
     }
 
     override fun injectModule(activityComponent: ActivityComponent) {
