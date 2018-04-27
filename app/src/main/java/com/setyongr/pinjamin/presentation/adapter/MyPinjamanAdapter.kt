@@ -23,7 +23,7 @@ class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return data.count()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ViewHolder).bind(data.values.toList()[position])
     }
 

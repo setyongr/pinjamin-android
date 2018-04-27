@@ -12,9 +12,12 @@ import com.setyongr.pinjamin.presentation.main.profile.edit.EditProfileDialog
 import com.setyongr.pinjamin.presentation.main.profile.verify.VerifyProfileActivity
 import com.setyongr.pinjamin.presentation.mydetail.MyDetailActivity
 import com.setyongr.pinjamin.presentation.order.OrderActivity
+import com.setyongr.pinjamin.presentation.orderdetail.QrViewerActivity
 import com.setyongr.pinjamin.presentation.pinjamin.OrderToMeDetailActivity
 import com.setyongr.pinjamin.presentation.pinjamin.PinjaminActivity
+import com.setyongr.pinjamin.presentation.pinjamin.UsePinjamanActivity
 import com.setyongr.pinjamin.presentation.pinjamin.addpinjaman.AddPinjamanActivity
+import com.setyongr.pinjamin.presentation.point.PointActivity
 import com.setyongr.pinjamin.presentation.portal.PortalActivity
 import com.setyongr.pinjamin.presentation.signin.SignInActivity
 import com.setyongr.pinjamin.presentation.signup.SignUpActivity
@@ -42,6 +45,9 @@ interface ActivityComponent {
     fun inject(verifyProfileActivity: VerifyProfileActivity)
     fun inject(addPinjamanActivity: AddPinjamanActivity)
     fun inject(pinjaminActivity: PinjaminActivity)
+    fun inject(qrViewerActivity: QrViewerActivity)
+    fun inject(usePinjamanActivity: UsePinjamanActivity)
+    fun inject(pointActivity: PointActivity)
 
     fun inject(homeFragment: HomeFragment)
     fun inject(profileFragment: ProfileFragment)

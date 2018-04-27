@@ -23,7 +23,8 @@ class ResponseModel {
             val ktpImage: String?,
             val ktmImage: String?,
             val avatar: String?,
-            val verified: Boolean
+            val verified: Boolean,
+            val point: Int
     )
 
     data class Pinjaman(

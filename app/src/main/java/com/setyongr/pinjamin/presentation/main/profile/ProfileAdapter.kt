@@ -13,7 +13,7 @@ class ProfileAdapter: BaseRecyclerAdapter<ProfileMenuItem>() {
         return Holder(parent.inflate(R.layout.item_profile))
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as Holder).bind(items[position])
     }
 

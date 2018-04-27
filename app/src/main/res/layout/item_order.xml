@@ -39,18 +39,45 @@
                 card_view:layout_constraintStart_toEndOf="@+id/side_view"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/time_text"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginBottom="16dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/lato_light"
-                android:text="Senin, 13 Oktober 2017"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/side_view"
-                card_view:layout_constraintTop_toBottomOf="@+id/name_text" />
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/name_text">
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_light"
+                    android:text="Senin, 13 Oktober 2017"/>
+
+                <TextView
+                    android:id="@+id/time_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_light"
+                    android:text="Senin, 13 Oktober 2017"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/time_text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_light"
+                    android:text="Senin, 13 Oktober 2017"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/accepted_text"

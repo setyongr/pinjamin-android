@@ -11,6 +11,7 @@ import com.setyongr.pinjamin.common.loadUrl
 import com.setyongr.pinjamin.data.models.OrderStatus
 import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.presentation.detail.DetailActivity
+import com.setyongr.pinjamin.presentation.orderdetail.QrViewerActivity
 import kotlinx.android.synthetic.main.item_order.view.*
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.ISODateTimeFormat
@@ -27,7 +28,7 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return data.count()
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ViewHolder).bind(data[position])
     }
 
@@ -57,6 +58,18 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     accepted_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.green_circle, 0, 0, 0)
                     "Accepted"
                 }
+                is OrderStatus.Used -> {
+                    side_view.setBackgroundResource(R.color.colorLine)
+                    accepted_text.setTextColor(ContextCompat.getColor(context, R.color.colorLine))
+                    accepted_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.black_circle, 0, 0, 0)
+                    "Used"
+                }
+                is OrderStatus.Completed -> {
+                    side_view.setBackgroundResource(R.color.colorFacebook)
+                    accepted_text.setTextColor(ContextCompat.getColor(context, R.color.colorFacebook))
+                    accepted_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.blue_circle, 0, 0, 0)
+                    "Completed"
+                }
                 else -> {
                     side_view.setBackgroundResource(R.color.colorRed)
                     accepted_text.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
@@ -66,14 +79,37 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             data.crated_at?.let {
-                time_text.text = DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseDateTime(data.crated_at))
+                val hasMilis = data.crated_at.contains(".", true)
+                if (hasMilis) {
+                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.crated_at))
+                } else {
+                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.crated_at))
+                }
             }
 
+            data.used_at?.let {
+                time_text2.visibility = View.VISIBLE
+                val hasMilis = data.used_at.contains(".", true)
+                if (hasMilis) {
+                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.used_at))
+                } else {
+                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.used_at))
+                }
+            }
+
+            data.finished_at?.let {
+                time_text3.visibility = View.VISIBLE
+                val hasMilis = data.finished_at.contains(".", true)
+                if (hasMilis) {
+                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.finished_at))
+                } else {
+                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.finished_at))
+                }
+            }
+
+
             itemView.setOnClickListener {
-                val intent = Intent(context, DetailActivity::class.java)
-                intent.putExtra("id", data.pinjam.id)
-                intent.putExtra("hide_order", true)
-                context.startActivity(intent)
+                QrViewerActivity.open(context, data.id)
             }
         }
     }

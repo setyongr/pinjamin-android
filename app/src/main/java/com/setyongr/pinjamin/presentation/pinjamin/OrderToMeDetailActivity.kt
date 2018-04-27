@@ -1,5 +1,6 @@
 package com.setyongr.pinjamin.presentation.pinjamin
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -156,11 +157,29 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
         verified_text.text = if (data.user.verified) "Verified" else "Not Verified"
         message_text.text = data.message
 
-        when (order?.status) {
-            is OrderStatus.Accepted, is OrderStatus.Rejected-> {
+        when(order?.status) {
+            is OrderStatus.Accepted, is OrderStatus.Rejected, is OrderStatus.Used, is OrderStatus.Completed -> {
                 accept_button.visibility = View.GONE
                 reject_button.visibility = View.GONE
             }
+        }
+        when (order?.status) {
+            is OrderStatus.Accepted -> {
+                used_complete_button.visibility = View.VISIBLE
+                used_complete_button.text = "Mulai Pakai"
+                used_complete_button.setOnClickListener {
+                    startActivityForResult(UsePinjamanActivity.buildIntent(this, id, UsePinjamanActivity.USE_MODE), 1001)
+                }
+            }
+
+            is OrderStatus.Used -> {
+                used_complete_button.visibility = View.VISIBLE
+                used_complete_button.text = "Selesai Pakai"
+                used_complete_button.setOnClickListener {
+                    startActivityForResult(UsePinjamanActivity.buildIntent(this, id, UsePinjamanActivity.COMPLETE_MODE), 1001)
+                }
+            }
+
         }
     }
 
@@ -188,6 +207,13 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:" + order?.user?.noHp)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK) {
+            load()
+        }
     }
 
 }

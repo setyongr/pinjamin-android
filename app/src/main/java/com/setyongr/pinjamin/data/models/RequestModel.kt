@@ -29,6 +29,8 @@ class RequestModel {
 
     data class OrderToMe(
             @JsonAdapter(OrderStatusAdapter::class)
-            val status: OrderStatus
+            val status: OrderStatus,
+            val used_at: String? = null,
+            val finished_at: String? = null
     )
 }

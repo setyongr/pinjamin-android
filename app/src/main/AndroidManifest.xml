@@ -3,6 +3,9 @@
     package="com.setyongr.pinjamin">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -60,6 +63,9 @@
         <activity android:name=".presentation.pinjamin.addpinjaman.AddPinjamanActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
+        <activity android:name=".presentation.orderdetail.QrViewerActivity" />
+        <activity android:name=".presentation.pinjamin.UsePinjamanActivity" />
+        <activity android:name=".presentation.point.PointActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

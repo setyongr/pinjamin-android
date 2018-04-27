@@ -23,6 +23,7 @@ import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.main.profile.edit.EditProfileDialog
 import com.setyongr.pinjamin.presentation.main.profile.verify.VerifyProfileActivity
 import com.setyongr.pinjamin.presentation.pinjamin.PinjaminActivity
+import com.setyongr.pinjamin.presentation.point.PointActivity
 import com.setyongr.pinjamin.presentation.portal.PortalActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
@@ -91,6 +92,12 @@ class ProfileFragment: BaseInjectedFragment(), ProfileView {
 
         if (changeImage) profile_image.loadUrl(user?.avatar)
 
+        val point = user?.point ?: 0
+
+        adapter.add(ProfileMenuItem("Point", point.toString(), {
+            context?.let { PointActivity.open(it, 0) }
+        }))
+
         adapter.add(ProfileMenuItem("Username", user?.username))
         adapter.add(ProfileMenuItem("Nama", user?.name, {
             showEditDialog(EditProfileDialog.NAME_TYPE)
@@ -116,6 +123,7 @@ class ProfileFragment: BaseInjectedFragment(), ProfileView {
             appState.logOut()
             getBaseActivity().move(Intent(context, PortalActivity::class.java), true, true)
         }))
+
     }
 
     private fun showEditDialog(type: Int) {
