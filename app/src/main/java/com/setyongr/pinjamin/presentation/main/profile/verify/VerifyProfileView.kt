@@ -1,8 +1,8 @@
 package com.setyongr.pinjamin.presentation.main.profile.verify
 
 import com.setyongr.pinjamin.base.BaseLeView
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.User
 
 interface VerifyProfileView: BaseLeView {
-    fun showUser(user: ResponseModel.User?)
+    fun showUser(user: User?)
 }

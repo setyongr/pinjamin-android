@@ -7,23 +7,18 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import io.reactivex.Observable
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.setyongr.domain.executor.SchedulerProvider
 import com.setyongr.pinjamin.base.BaseActivity
-import io.reactivex.Completable
+import io.reactivex.Observable
+import io.reactivex.Single
 import okhttp3.ResponseBody
-
 
 fun <T> Observable<T>.applyDefaultSchedulers(provider: SchedulerProvider) =
         this.subscribeOn(provider.io()).observeOn(provider.ui())
-
-fun Completable.applyDefaultSchedulers(provider: SchedulerProvider) =
-        this.subscribeOn(provider.io()).observeOn(provider.ui())
-
 
 fun CharSequence.isEmailText(): Boolean {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()

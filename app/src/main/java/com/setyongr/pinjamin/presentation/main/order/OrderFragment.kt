@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.Order
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.OrderAdapter
 import kotlinx.android.synthetic.main.fragment_order.*
@@ -64,7 +64,7 @@ class OrderFragment: BaseInjectedFragment(), OrderView {
         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun addOrder(order: ResponseModel.Order) {
+    override fun addOrder(order: Order) {
         if (no_order.visibility == View.VISIBLE) {
             no_order.visibility = View.GONE
         }

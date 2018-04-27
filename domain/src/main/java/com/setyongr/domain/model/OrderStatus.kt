@@ -1,4 +1,4 @@
-package com.setyongr.pinjamin.data.models
+package com.setyongr.domain.model
 
 sealed class OrderStatus(val status: Int) {
     class Rejected: OrderStatus(-1)

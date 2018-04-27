@@ -1,8 +1,8 @@
 package com.setyongr.pinjamin.presentation.pinjamin.mypinjaman
 
 import com.setyongr.pinjamin.base.BaseLeView
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.Pinjaman
 
 interface MyPinjamanView: BaseLeView {
-    fun addPinjaman(pinjaman: ResponseModel.Pinjaman)
+    fun addPinjaman(pinjaman: Pinjaman)
 }

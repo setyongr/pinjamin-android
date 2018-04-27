@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.common.inflate
+import com.setyongr.data.remote.models.ResponseModel
+import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.presentation.mydetail.MyDetailActivity
 import kotlinx.android.synthetic.main.item_pinjaman.view.*
 
 class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val data = mutableMapOf<Int, ResponseModel.Pinjaman>()
+    val data = mutableMapOf<Int, Pinjaman>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_pinjaman))
@@ -27,7 +28,7 @@ class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         (holder as ViewHolder).bind(data.values.toList()[position])
     }
 
-    fun add(pinjaman: ResponseModel.Pinjaman) {
+    fun add(pinjaman: Pinjaman) {
         data[pinjaman.id] = pinjaman
         notifyDataSetChanged()
     }
@@ -38,7 +39,7 @@ class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        fun bind(data: ResponseModel.Pinjaman) = with(itemView) {
+        fun bind(data: Pinjaman) = with(itemView) {
             name_text.text = data.name
             user_text.text = "By ${data.user.username}"
             sewa_image.loadUrl(data.image)

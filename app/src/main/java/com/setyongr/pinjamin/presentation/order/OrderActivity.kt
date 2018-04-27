@@ -6,23 +6,15 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.widget.Toast
 import com.setyongr.pinjamin.R
-import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.RequestModel
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.data.remote.PinjaminService
+import com.setyongr.domain.interactor.order.PlaceOrderUseCase
+import com.setyongr.domain.interactor.pinjaman.GetPinjamanByIdUseCase
+import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_order.*
 import javax.inject.Inject
-import android.graphics.PorterDuff
-import com.setyongr.pinjamin.R.id.collapsingToolbar
-import android.support.v4.view.ViewCompat
-import android.opengl.ETC1.getHeight
-import android.support.design.widget.AppBarLayout
-
 
 
 class OrderActivity: BaseInjectedActivity() {
@@ -30,7 +22,10 @@ class OrderActivity: BaseInjectedActivity() {
     lateinit var service: PinjaminService
 
     @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var placeOrderUseCase: PlaceOrderUseCase
+
+    @Inject
+    lateinit var getPinjamanByIdUseCase: GetPinjamanByIdUseCase
 
     override fun injectModule(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
@@ -65,10 +60,9 @@ class OrderActivity: BaseInjectedActivity() {
 
     fun load(id: Int) {
         showLoading(true)
-        service.getPinjamanById(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        getPinjamanByIdUseCase.execute(id)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             showLoading(false)
                             show(it)
                         },
@@ -80,17 +74,17 @@ class OrderActivity: BaseInjectedActivity() {
                 )
     }
 
-    fun show(data: ResponseModel.Pinjaman) {
+    fun show(data: Pinjaman) {
         name_text.text = data.name
         user_text.text = data.user.username
     }
 
     fun save() {
         showLoading(true)
-        service.placeOrder(RequestModel.Order(id, message_text.editText?.text.toString()))
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = PlaceOrderUseCase.OrderParam(id, message_text.editText?.text.toString())
+        placeOrderUseCase.execute(params)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             showLoading(false)
                             val dialog = AlertDialog.Builder(this)
                                     .setTitle("Success")

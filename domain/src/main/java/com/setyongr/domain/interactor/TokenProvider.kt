@@ -1,4 +1,4 @@
-package com.setyongr.pinjamin.data
+package com.setyongr.domain.interactor
 
 interface TokenProvider {
     fun setToken(token: String)

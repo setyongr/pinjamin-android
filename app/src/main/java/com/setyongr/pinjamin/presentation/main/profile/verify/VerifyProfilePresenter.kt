@@ -4,25 +4,21 @@ import android.app.Activity
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import com.setyongr.pinjamin.base.BaseRxPresenter
 import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.data.PinjaminService
+import com.setyongr.domain.executor.SchedulerProvider
+import com.setyongr.domain.interactor.user.UpdateUserImageUseCase
 import id.zelory.compressor.Compressor
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 class VerifyProfilePresenter @Inject constructor(
         private val activity: Activity,
+        private val appState: AppState,
         private val schedulerProvider: SchedulerProvider,
-        private val service: PinjaminService,
-        private val appState: AppState
+        private val updateUserImageUseCase: UpdateUserImageUseCase
 ): BaseRxPresenter<VerifyProfileView>() {
     companion object {
         val KTP_FLAG = 1
@@ -36,19 +32,12 @@ class VerifyProfilePresenter @Inject constructor(
     fun uploadImage(file: File, flag: Int) {
         getView().showLoading(true)
 
-        val i = file.name.lastIndexOf('.')
-        val ext = file.name.substring(i+1)
-        val requestFile = RequestBody.create(
-                MediaType.parse("image/*"),
-                Compressor(activity).compressToFile(file)
-        )
-        // Create request body for image with random filename without extension
-        val imagePart = MultipartBody.Part.createFormData(if (flag == 1) "ktpImage" else "ktmImage", UUID.randomUUID().toString() + '.' + ext, requestFile)
+        val imageParam = UpdateUserImageUseCase.ImageParam(if (flag == 1) "ktpImage" else "ktmImage",
+                Compressor(activity).compressToFile(file))
 
-        disposables += service.updateMeImage(imagePart)
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += updateUserImageUseCase.execute(imageParam)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             appState.saveUser(it)
                             getView().showUser(it)

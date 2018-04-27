@@ -1,40 +1,30 @@
 package com.setyongr.pinjamin.presentation.detail
 
-import android.Manifest
-import android.animation.ArgbEvaluator
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.injection.component.ActivityComponent
-import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.activity_detail.*
 import javax.inject.Inject
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.net.Uri
-import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.ViewCompat
-import android.util.Log
 import android.view.View
+import com.setyongr.domain.interactor.pinjaman.GetPinjamanByIdUseCase
+import com.setyongr.domain.model.Pinjaman
+import com.setyongr.pinjamin.common.loadUrl
 import com.setyongr.pinjamin.data.AppState
 import com.setyongr.pinjamin.presentation.order.OrderActivity
+import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.activity_detail.*
 
 
 class DetailActivity: BaseInjectedActivity() {
     @Inject
-    lateinit var service: PinjaminService
-
-    @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var getPinjamanByIdUseCaseUseCase: GetPinjamanByIdUseCase
 
     @Inject
     lateinit var appState: AppState
@@ -93,10 +83,9 @@ class DetailActivity: BaseInjectedActivity() {
 
     fun load(id: Int) {
         showLoading(true)
-        service.getPinjamanById(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        getPinjamanByIdUseCaseUseCase.execute(id)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             showLoading(false)
                             show(it)
                         },
@@ -108,7 +97,7 @@ class DetailActivity: BaseInjectedActivity() {
                 )
     }
 
-    fun show(data: ResponseModel.Pinjaman) {
+    fun show(data: Pinjaman) {
         collapsingToolbar.title = data.name
         overview.text = data.deskripsi
         backdrop.loadUrl(data.image)

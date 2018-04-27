@@ -1,4 +1,4 @@
-package com.setyongr.pinjamin.common.rx
+package com.setyongr.domain.executor
 
 import io.reactivex.Scheduler
 

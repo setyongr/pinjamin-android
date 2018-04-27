@@ -1,8 +1,8 @@
 package com.setyongr.pinjamin
 
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.RequestModel
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.data.remote.PinjaminService
+import com.setyongr.data.remote.models.RequestModel
+import com.setyongr.data.remote.models.ResponseModel
 import io.reactivex.observers.TestObserver
 import org.junit.Test
 

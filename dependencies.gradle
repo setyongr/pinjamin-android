@@ -10,9 +10,11 @@ ext {
             powerMock     : '1.6.6',
             hamcrest      : '1.3',
             restMock      : '0.2.0',
-            dagger        : '2.11',
+            dagger        : '2.15',
             butterKnife   : '8.7.0',
-            sdp           : '1.0.4'
+            sdp           : '1.0.4',
+            javaxAnnotation : '1.0',
+            javaxInject : '1'
     ]
 
     mockito = [mockito: "org.mockito:mockito-core:2.6.8"]
@@ -28,7 +30,7 @@ ext {
 
     rxJava = [
             rxKotlin : 'io.reactivex.rxjava2:rxkotlin:2.1.0',
-            rxAndroid: "io.reactivex.rxjava2:rxandroid:2.0.1"
+            rxAndroid: "io.reactivex.rxjava2:rxandroid:2.0.2"
     ]
 
     retrofit = [
@@ -107,6 +109,11 @@ ext {
             "chatkit": "com.github.stfalcon:chatkit:0.2.2"
     ]
 
+    common = [
+            javaxAnnotation:    "javax.annotation:jsr250-api:$versions.javaxAnnotation",
+            javaxInject: "javax.inject:javax.inject:$versions.javaxInject",
+    ]
+
     supportLibs = supportDeps.values()
     networkLibs = retrofit.values() + okHttp.values()
     rxJavaLibs = rxJava.values()
@@ -121,6 +128,7 @@ ext {
     imagePickerLibs = imagePicker.values()
     glideLibs = glide.values()
     utilsLibs = utils.values()
+    commonLibs = common.values()
 
     leakCannary = "com.squareup.leakcanary:leakcanary-android:1.5"
     daggerCompiler = "com.google.dagger:dagger-compiler:$versions.dagger"

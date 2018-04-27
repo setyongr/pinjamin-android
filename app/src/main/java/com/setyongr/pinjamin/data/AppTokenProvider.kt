@@ -1,6 +1,7 @@
 package com.setyongr.pinjamin.data
 
 import android.content.SharedPreferences
+import com.setyongr.domain.interactor.TokenProvider
 import javax.inject.Inject
 
 class AppTokenProvider @Inject constructor(private val pref: SharedPreferences): TokenProvider {

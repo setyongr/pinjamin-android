@@ -7,7 +7,7 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.PinjamanAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -65,7 +65,7 @@ class HomeFragment: BaseInjectedFragment(), HomeView {
         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun addPinjaman(pinjaman: ResponseModel.Pinjaman) {
+    override fun addPinjaman(pinjaman: Pinjaman) {
         adapter.add(pinjaman)
     }
 

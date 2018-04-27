@@ -1,7 +1,7 @@
 package com.setyongr.pinjamin.injection.module
 
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.TokenProvider
+import com.setyongr.data.remote.PinjaminService
+import com.setyongr.domain.interactor.TokenProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

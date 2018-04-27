@@ -7,10 +7,10 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.Order
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.OrderToMeAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_order_to_me.*
 import javax.inject.Inject
 
 class OrderToMeFragment: BaseInjectedFragment(), OrderToMeView {
@@ -72,7 +72,7 @@ class OrderToMeFragment: BaseInjectedFragment(), OrderToMeView {
         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun addOrder(order: ResponseModel.Order) {
+    override fun addOrder(order: Order) {
         adapter.add(order)
     }
 

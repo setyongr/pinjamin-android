@@ -1,16 +1,14 @@
 package com.setyongr.pinjamin.presentation.adapter
 
-import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.common.inflate
-import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.data.models.OrderStatus
-import com.setyongr.pinjamin.data.models.ResponseModel
-import com.setyongr.pinjamin.presentation.detail.DetailActivity
+import com.setyongr.domain.model.OrderStatus
+import com.setyongr.data.remote.models.ResponseModel
+import com.setyongr.domain.model.Order
 import com.setyongr.pinjamin.presentation.orderdetail.QrViewerActivity
 import kotlinx.android.synthetic.main.item_order.view.*
 import org.joda.time.format.DateTimeFormat
@@ -18,7 +16,7 @@ import org.joda.time.format.ISODateTimeFormat
 
 class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val data = mutableListOf<ResponseModel.Order>()
+    val data = mutableListOf<Order>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_order))
@@ -32,7 +30,7 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         (holder as ViewHolder).bind(data[position])
     }
 
-    fun add(order: ResponseModel.Order) {
+    fun add(order: Order) {
         data.add(order)
         notifyDataSetChanged()
     }
@@ -43,7 +41,7 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        fun bind(data: ResponseModel.Order) = with(itemView) {
+        fun bind(data: Order) = with(itemView) {
             name_text.text= data.pinjam.name
             accepted_text.text = when(data.status) {
                 is OrderStatus.Waiting -> {
@@ -79,31 +77,31 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
 
             data.crated_at?.let {
-                val hasMilis = data.crated_at.contains(".", true)
+                val hasMilis = it.contains(".", true)
                 if (hasMilis) {
-                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.crated_at))
+                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(it))
                 } else {
-                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.crated_at))
+                    time_text.text = "Dibuat: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(it))
                 }
             }
 
             data.used_at?.let {
                 time_text2.visibility = View.VISIBLE
-                val hasMilis = data.used_at.contains(".", true)
+                val hasMilis = it.contains(".", true)
                 if (hasMilis) {
-                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.used_at))
+                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(it))
                 } else {
-                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.used_at))
+                    time_text2.text = "Dipakai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(it))
                 }
             }
 
             data.finished_at?.let {
                 time_text3.visibility = View.VISIBLE
-                val hasMilis = data.finished_at.contains(".", true)
+                val hasMilis = it.contains(".", true)
                 if (hasMilis) {
-                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(data.finished_at))
+                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTime().parseLocalDateTime(it))
                 } else {
-                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(data.finished_at))
+                    time_text3.text = "Selesai: " + DateTimeFormat.forPattern("dd/MM/YYYY HH:mm").print(ISODateTimeFormat.dateTimeNoMillis().parseLocalDateTime(it))
                 }
             }
 

@@ -2,18 +2,15 @@ package com.setyongr.pinjamin.presentation.pinjamin.ordertome
 
 import com.setyongr.pinjamin.base.BaseRxPresenter
 import com.setyongr.pinjamin.common.Event
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.data.PinjaminService
+import com.setyongr.domain.interactor.order.partner.GetPartnerOrdersListUseCase
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class OrderToMePresenter @Inject constructor(
         private val appState: AppState,
-        private val service: PinjaminService,
-        private val schedulerProvider: SchedulerProvider
+        private val getPartnerOrdersListUseCase: GetPartnerOrdersListUseCase
 ): BaseRxPresenter<OrderToMeView>() {
     fun clear() {
         appState.orderToMe.clear()
@@ -39,10 +36,9 @@ class OrderToMePresenter @Inject constructor(
 
     fun getRemote() {
         getView().showLoading(true)
-        disposables += service.getOrderToMe()
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += getPartnerOrdersListUseCase.execute()
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             it.forEach {
                                 appState.orderToMe.add(it.id, it)

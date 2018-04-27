@@ -1,48 +1,37 @@
 package com.setyongr.pinjamin.presentation.main.profile
 
 import android.app.Activity
-import android.content.Context
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import com.setyongr.pinjamin.base.BaseRxPresenter
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.injection.ActivityContext
+import com.setyongr.domain.executor.SchedulerProvider
+import com.setyongr.domain.interactor.user.CurrentUserUseCase
+import com.setyongr.domain.interactor.user.UpdateUserImageUseCase
+import com.setyongr.pinjamin.common.applyDefaultSchedulers
 import id.zelory.compressor.Compressor
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
-    private val activity: Activity,
-    private val schedulerProvider: SchedulerProvider,
-    private val service: PinjaminService,
-    private val appState: AppState
+        private val activity: Activity,
+        private val currentUserUseCase: CurrentUserUseCase,
+        private val updateUserImageUseCase: UpdateUserImageUseCase,
+        private val schedulerProvider: SchedulerProvider,
+        private val appState: AppState
 ): BaseRxPresenter<ProfileView>() {
 
     fun uploadImage(file: File) {
         getView().showLoading(true)
 
-        val i = file.name.lastIndexOf('.')
-        val ext = file.name.substring(i+1)
-        val requestFile = RequestBody.create(
-                MediaType.parse("image/*"),
-                Compressor(activity).compressToFile(file)
-        )
-        // Create request body for image with random filename without extension
-        val imagePart = MultipartBody.Part.createFormData("avatar", UUID.randomUUID().toString() + '.' + ext, requestFile)
+        val imageParam = UpdateUserImageUseCase.ImageParam("avatar",
+                Compressor(activity).compressToFile(file))
 
-        disposables += service.updateMeImage(imagePart)
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += updateUserImageUseCase.execute(imageParam)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             appState.saveUser(it)
                             getView().onSuccess()
@@ -93,10 +82,9 @@ class ProfilePresenter @Inject constructor(
 
     fun refreshUser() {
         getView().showLoading(true)
-        disposables += service.me()
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += currentUserUseCase.execute()
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             appState.saveUser(it)
                             getView().onSuccess()
@@ -113,10 +101,9 @@ class ProfilePresenter @Inject constructor(
     }
 
     fun refreshUserSilent() {
-        disposables += service.me()
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += currentUserUseCase.execute()
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             appState.saveUser(it)
                             getView().onSuccess(false)
                         },

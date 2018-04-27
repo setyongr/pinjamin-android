@@ -1,8 +1,8 @@
 package com.setyongr.pinjamin
 
-import com.setyongr.pinjamin.data.TokenProvider
+import com.setyongr.domain.interactor.TokenProvider
 
-class TestTokenProvider: TokenProvider{
+class TestTokenProvider: TokenProvider {
     override fun setToken(token: String) {
         //
     }

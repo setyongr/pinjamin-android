@@ -10,11 +10,9 @@ import android.support.v7.app.AlertDialog
 import android.widget.Toast
 import com.google.zxing.Result
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.OrderStatus
-import com.setyongr.pinjamin.data.models.RequestModel
+import com.setyongr.domain.model.OrderStatus
+import com.setyongr.domain.interactor.order.partner.UpdateOrderUseCase
+import com.setyongr.domain.model.OrderUpdate
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.joda.time.DateTime
@@ -23,11 +21,9 @@ import javax.inject.Inject
 
 class UsePinjamanActivity: BaseInjectedActivity(), ZXingScannerView.ResultHandler {
     private var mScannerView: ZXingScannerView? = null
-    @Inject
-    lateinit var service: PinjaminService
 
     @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var updateOrderUseCase: UpdateOrderUseCase
 
     var progress: ProgressDialog? = null
     private var id: Int = 0
@@ -75,8 +71,13 @@ class UsePinjamanActivity: BaseInjectedActivity(), ZXingScannerView.ResultHandle
         val calendar = Calendar.getInstance()
         val datetime = DateTime(calendar)
 
-        service.updateOrderToMe(id, RequestModel.OrderToMe(status = OrderStatus.Used(), used_at = datetime.toString()))
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = OrderUpdate(
+                id = id,
+                status = OrderStatus.Used(),
+                used_at = datetime.toString()
+        )
+
+        updateOrderUseCase.execute(params)
                 .subscribe(
                         {
                             AlertDialog
@@ -98,8 +99,13 @@ class UsePinjamanActivity: BaseInjectedActivity(), ZXingScannerView.ResultHandle
     fun complete() {
         val calendar = Calendar.getInstance()
         val datetime = DateTime(calendar)
-        service.updateOrderToMe(id, RequestModel.OrderToMe(status = OrderStatus.Completed(), finished_at = datetime.toString()))
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = OrderUpdate(
+                id = id,
+                status = OrderStatus.Completed(),
+                finished_at = datetime.toString()
+        )
+
+        updateOrderUseCase.execute(params)
                 .subscribe(
                         {
                             AlertDialog

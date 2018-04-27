@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import com.google.zxing.BarcodeFormat
@@ -15,13 +14,11 @@ import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.OrderStatus
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.OrderStatus
+import com.setyongr.domain.interactor.order.GetOrderByIdUseCase
+import com.setyongr.domain.model.Order
+import com.setyongr.pinjamin.common.loadUrl
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_qrview.*
@@ -29,10 +26,7 @@ import javax.inject.Inject
 
 class QrViewerActivity: BaseInjectedActivity() {
     @Inject
-    lateinit var service: PinjaminService
-
-    @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var getOrderByIdUseCase: GetOrderByIdUseCase
 
     @Inject
     lateinit var appState: AppState
@@ -111,10 +105,9 @@ class QrViewerActivity: BaseInjectedActivity() {
 
     fun load(id: Int) {
         showLoading(true)
-        service.getOrderById(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        getOrderByIdUseCase.execute(id)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             showLoading(false)
                             show(it)
                         },
@@ -126,7 +119,7 @@ class QrViewerActivity: BaseInjectedActivity() {
                 )
     }
 
-    fun show(data: ResponseModel.Order) {
+    fun show(data: Order) {
 
         penyewa_text.text = data.pinjam.user.name
         username_text.text = data.pinjam.user.username

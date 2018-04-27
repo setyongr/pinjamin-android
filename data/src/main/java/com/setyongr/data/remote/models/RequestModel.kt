@@ -1,7 +1,8 @@
-package com.setyongr.pinjamin.data.models
+package com.setyongr.data.remote.models
 
 import com.google.gson.annotations.JsonAdapter
-import com.setyongr.pinjamin.data.adapter.OrderStatusAdapter
+import com.setyongr.data.remote.adapter.OrderStatusAdapter
+import com.setyongr.domain.model.OrderStatus
 
 class RequestModel {
     data class Login(

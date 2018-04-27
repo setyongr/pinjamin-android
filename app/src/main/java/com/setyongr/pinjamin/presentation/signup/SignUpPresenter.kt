@@ -1,14 +1,11 @@
 package com.setyongr.pinjamin.presentation.signup
 
-import com.google.gson.Gson
 import com.setyongr.pinjamin.base.BaseRxPresenter
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
 import com.setyongr.pinjamin.common.isEmailText
+import com.setyongr.data.remote.models.ResponseModel
+import com.setyongr.domain.interactor.user.RegisterUseCase
+import com.setyongr.domain.model.Register
 import com.setyongr.pinjamin.common.parse
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.RequestModel
-import com.setyongr.pinjamin.data.models.ResponseModel
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
@@ -18,8 +15,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SignUpPresenter @Inject constructor(
-        private val service: PinjaminService,
-        private val schedulerProvider: SchedulerProvider
+        private val registerUseCase: RegisterUseCase
 ): BaseRxPresenter<SignUpView>() {
     var name = ""
     var email = ""
@@ -85,10 +81,9 @@ class SignUpPresenter @Inject constructor(
 
     fun signUp() {
         getView().showLoading(true)
-        disposables += service.register(RequestModel.Register(name = name, username = username, email = email, password = password))
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += registerUseCase.execute(Register(name = name, username = username, email = email, password = password))
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             getView().onRegisterSuccess()
                         },

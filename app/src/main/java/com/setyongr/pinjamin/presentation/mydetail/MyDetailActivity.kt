@@ -7,46 +7,17 @@ import android.os.Bundle
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.injection.component.ActivityComponent
-import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
-import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.support.v7.app.AlertDialog
+import com.setyongr.domain.model.Pinjaman
+import com.setyongr.pinjamin.common.loadUrl
 import kotlinx.android.synthetic.main.activity_detail_my.*
 import java.io.File
 
 
 class MyDetailActivity: BaseInjectedActivity(), MyDetailView {
-    override fun showError(e: Throwable) {
-        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showImage(file: File) {
-        pinjam_image.setImageBitmap(BitmapFactory.decodeFile(file.path))
-    }
-
-    override fun onSuccess() {
-        val dialog = AlertDialog.Builder(this)
-                .setTitle("Success")
-                .setMessage("Operation Success")
-                .setPositiveButton("OK") {
-                    dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-
-                    finish()
-                }
-                .create()
-
-        dialog.show()
-    }
-
     @Inject
     lateinit var mPresenter: MyDetailPresenter
 
@@ -101,7 +72,7 @@ class MyDetailActivity: BaseInjectedActivity(), MyDetailView {
             progress = ProgressDialog.show(this, "Loading", "Please wait...", true, false)
         }
     }
-    override fun show(pinjaman: ResponseModel.Pinjaman) {
+    override fun show(pinjaman: Pinjaman) {
         title_input.editText?.setText(pinjaman.name)
         description_input.editText?.setText(pinjaman.deskripsi)
         pinjam_image.loadUrl(pinjaman.image)
@@ -112,4 +83,26 @@ class MyDetailActivity: BaseInjectedActivity(), MyDetailView {
         activityComponent.inject(this)
     }
 
+    override fun showError(e: Throwable) {
+        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun showImage(file: File) {
+        pinjam_image.setImageBitmap(BitmapFactory.decodeFile(file.path))
+    }
+
+    override fun onSuccess() {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle("Success")
+                .setMessage("Operation Success")
+                .setPositiveButton("OK") {
+                    dialogInterface: DialogInterface, _: Int ->
+                    dialogInterface.dismiss()
+
+                    finish()
+                }
+                .create()
+
+        dialog.show()
+    }
 }

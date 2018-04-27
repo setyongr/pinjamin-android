@@ -2,18 +2,15 @@ package com.setyongr.pinjamin.presentation.main.home
 
 import com.setyongr.pinjamin.base.BaseRxPresenter
 import com.setyongr.pinjamin.common.Event
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.data.PinjaminService
+import com.setyongr.domain.interactor.pinjaman.GetPinjamanListUseCase
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(
         private val appState: AppState,
-        private val service: PinjaminService,
-        private val schedulerProvider: SchedulerProvider
+        private val getPinjamanListUseCase: GetPinjamanListUseCase
 ): BaseRxPresenter<HomeView>() {
     fun clear() {
         appState.pinjamanList.clear()
@@ -39,10 +36,9 @@ class HomePresenter @Inject constructor(
 
     fun getRemote() {
         getView().showLoading(true)
-        disposables += service.getPinjaman()
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += getPinjamanListUseCase.execute()
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             it.forEach {
                                 appState.pinjamanList.add(it.id, it)

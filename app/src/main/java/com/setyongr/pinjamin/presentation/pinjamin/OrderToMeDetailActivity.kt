@@ -7,20 +7,20 @@ import android.os.Bundle
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.data.remote.PinjaminService
 import com.setyongr.pinjamin.injection.component.ActivityComponent
-import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AlertDialog
 import android.view.View
+import com.setyongr.domain.model.OrderStatus
+import com.setyongr.domain.interactor.order.partner.GetPartnerOrderByIdUseCase
+import com.setyongr.domain.interactor.order.partner.UpdateOrderUseCase
+import com.setyongr.domain.model.Order
+import com.setyongr.domain.model.OrderUpdate
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.data.models.OrderStatus
-import com.setyongr.pinjamin.data.models.RequestModel
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_order_to_me_detail.*
 
 
@@ -29,11 +29,14 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
     lateinit var service: PinjaminService
 
     @Inject
-    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var getPartnerOrderByIdUseCase: GetPartnerOrderByIdUseCase
+
+    @Inject
+    lateinit var updateOrderUseCase: UpdateOrderUseCase
 
     var progress: ProgressDialog? = null
     private var id: Int = 0
-    var order: ResponseModel.Order? = null
+    var order: Order? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,10 +79,9 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun load() {
         showLoading(true)
-        service.getOrderToMeById(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        getPartnerOrderByIdUseCase.execute(id)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             showLoading(false)
                             show(it)
                         },
@@ -93,10 +95,10 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun accept() {
         showLoading(true)
-        service.updateOrderToMe(id, RequestModel.OrderToMe(OrderStatus.Accepted()))
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = OrderUpdate(id, OrderStatus.Accepted())
+        updateOrderUseCase.execute(params)
                 .subscribeBy(
-                        onComplete = {
+                        onSuccess = {
                             showLoading(false)
                             val dialog = AlertDialog.Builder(this)
                                     .setTitle("Success")
@@ -121,10 +123,10 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
 
     fun reject() {
         showLoading(true)
-        service.updateOrderToMe(id, RequestModel.OrderToMe(OrderStatus.Rejected()))
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = OrderUpdate(id, OrderStatus.Rejected())
+        updateOrderUseCase.execute(params)
                 .subscribeBy(
-                        onComplete = {
+                        onSuccess = {
                             showLoading(false)
                             val dialog = AlertDialog.Builder(this)
                                     .setTitle("Success")
@@ -147,7 +149,7 @@ class OrderToMeDetailActivity: BaseInjectedActivity() {
                 )
     }
 
-    fun show(data: ResponseModel.Order) {
+    fun show(data: Order) {
         order = data
         penyewa_text.text = data.user.name
         username_text.text = data.user.username

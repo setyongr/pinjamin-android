@@ -4,34 +4,40 @@ import android.app.Activity
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import com.setyongr.pinjamin.base.BaseRxPresenter
 import com.setyongr.pinjamin.common.applyDefaultSchedulers
-import com.setyongr.pinjamin.common.rx.SchedulerProvider
-import com.setyongr.pinjamin.data.PinjaminService
+import com.setyongr.domain.executor.SchedulerProvider
+import com.setyongr.domain.interactor.pinjaman.GetPinjamanByIdUseCase
+import com.setyongr.domain.interactor.pinjaman.partner.DeletePinjamanUseCase
+import com.setyongr.domain.interactor.pinjaman.partner.UpdatePinjamanUseCase
 import id.zelory.compressor.Compressor
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.HttpException
 import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 class MyDetailPresenter @Inject constructor(
-        private val service: PinjaminService,
-        private val schedulerProvider: SchedulerProvider,
-        private val activity: Activity
+        private val updatePinjamanUseCase: UpdatePinjamanUseCase,
+        private val deletePinjamanUseCase: DeletePinjamanUseCase,
+        private val getPinjamanByIdUseCase: GetPinjamanByIdUseCase,
+        private val activity: Activity,
+        private val schedulerProvider: SchedulerProvider
 ): BaseRxPresenter<MyDetailView>() {
-    var imagePart: MultipartBody.Part? = null
+    var imageFile: File? = null
 
     fun save(id: Int, name: String, deskripsi: String) {
         getView().showLoading(true)
 
-        disposables += service.updatePinjaman(id, name, deskripsi, imagePart)
-                .applyDefaultSchedulers(schedulerProvider)
+        val params = UpdatePinjamanUseCase.PinjamanParams(
+                id = id,
+                name = name,
+                description = deskripsi,
+                image = imageFile
+        )
+
+        disposables += updatePinjamanUseCase.execute(params)
                 .subscribeBy(
-                        onNext = {
-                            imagePart = null
+                        onSuccess = {
+                            imageFile = null
                             getView().showLoading(false)
                             getView().onSuccess()
                         },
@@ -48,8 +54,7 @@ class MyDetailPresenter @Inject constructor(
 
     fun delete(id: Int) {
         getView().showLoading(true)
-        disposables += service.deleteMyPinjaman(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += deletePinjamanUseCase.execute(id)
                 .subscribeBy(
                         onComplete = {
                             getView().showLoading(false)
@@ -68,10 +73,9 @@ class MyDetailPresenter @Inject constructor(
 
     fun load(id: Int) {
         getView().showLoading(true)
-        disposables += service.getPinjamanById(id)
-                .applyDefaultSchedulers(schedulerProvider)
+        disposables += getPinjamanByIdUseCase.execute(id)
                 .subscribeBy(
-                        onNext = {
+                        onSuccess = {
                             getView().showLoading(false)
                             getView().show(it)
                         },
@@ -88,17 +92,7 @@ class MyDetailPresenter @Inject constructor(
 
     fun showImage(file: File) {
         getView().showImage(file)
-
-
-        val i = file.name.lastIndexOf('.')
-        val ext = file.name.substring(i+1)
-        val requestFile = RequestBody.create(
-                MediaType.parse("image/*"),
-                Compressor(activity).compressToFile(file)
-        )
-        // Create request body for image with random filename without extension
-        imagePart = MultipartBody.Part.createFormData("image", UUID.randomUUID().toString() + '.' + ext, requestFile)
-
+        imageFile = Compressor(activity).compressToFile(file)
     }
 
     fun pickGallery(preferedResult: Int) {

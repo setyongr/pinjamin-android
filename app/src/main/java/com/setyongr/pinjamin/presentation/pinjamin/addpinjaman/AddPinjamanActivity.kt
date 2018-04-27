@@ -6,12 +6,11 @@ import android.content.DialogInterface
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.view.View
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.base.BaseInjectedFragment
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.data.remote.models.ResponseModel
+import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_add_pinjaman.*
 import java.io.File
@@ -78,7 +77,7 @@ class AddPinjamanActivity : BaseInjectedActivity(), AddPinjamanView {
         pinjam_image.setImageBitmap(BitmapFactory.decodeFile(file.path))
     }
 
-    override fun onSuccess(pinjaman: ResponseModel.Pinjaman) {
+    override fun onSuccess(pinjaman: Pinjaman) {
         // Reset
         title_input.editText?.setText("")
         description_input.editText?.setText("")

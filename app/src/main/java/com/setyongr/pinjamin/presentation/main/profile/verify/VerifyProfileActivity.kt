@@ -8,32 +8,13 @@ import android.support.v7.app.AlertDialog
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
+import com.setyongr.domain.model.User
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.data.models.ResponseModel
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_verify_profile.*
 import javax.inject.Inject
 
 class VerifyProfileActivity: BaseInjectedActivity(), VerifyProfileView {
-    override fun showUser(user: ResponseModel.User?) {
-        user?.let {
-            ktm_image.loadUrl(it.ktmImage)
-            ktp_image.loadUrl(it.ktpImage)
-            verified_text.text = if (it.verified) "Terverifikasi" else "Belum Terverifikasi"
-        }
-    }
-
-    override fun showLoading(status: Boolean) {
-        progress?.dismiss()
-        if (status) {
-            progress = ProgressDialog.show(this, "Loading", "Please wait...", true, false)
-        }
-    }
-
-    override fun showError(e: Throwable) {
-        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-    }
-
     @Inject
     lateinit var mPresenter: VerifyProfilePresenter
 
@@ -102,6 +83,25 @@ class VerifyProfileActivity: BaseInjectedActivity(), VerifyProfileView {
 
     override fun injectModule(activityComponent: ActivityComponent) {
         activityComponent.inject(this)
+    }
+
+    override fun showUser(user: User?) {
+        user?.let {
+            ktm_image.loadUrl(it.ktmImage)
+            ktp_image.loadUrl(it.ktpImage)
+            verified_text.text = if (it.verified) "Terverifikasi" else "Belum Terverifikasi"
+        }
+    }
+
+    override fun showLoading(status: Boolean) {
+        progress?.dismiss()
+        if (status) {
+            progress = ProgressDialog.show(this, "Loading", "Please wait...", true, false)
+        }
+    }
+
+    override fun showError(e: Throwable) {
+        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
     }
 
 }

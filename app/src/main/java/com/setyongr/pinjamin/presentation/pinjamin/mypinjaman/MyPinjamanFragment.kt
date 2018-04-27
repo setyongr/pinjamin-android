@@ -2,14 +2,13 @@ package com.setyongr.pinjamin.presentation.pinjamin.mypinjaman
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
-import com.setyongr.pinjamin.data.models.ResponseModel
+import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.MyPinjamanAdapter
 import com.setyongr.pinjamin.presentation.pinjamin.addpinjaman.AddPinjamanActivity
@@ -73,7 +72,7 @@ class MyPinjamanFragment: BaseInjectedFragment(), MyPinjamanView {
         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
     }
 
-    override fun addPinjaman(pinjaman: ResponseModel.Pinjaman) {
+    override fun addPinjaman(pinjaman: Pinjaman) {
         adapter.add(pinjaman)
     }
 
