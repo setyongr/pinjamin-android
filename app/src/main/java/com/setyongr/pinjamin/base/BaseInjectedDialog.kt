@@ -1,30 +1,20 @@
 package com.setyongr.pinjamin.base
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.setyongr.pinjamin.App
-import com.setyongr.pinjamin.injection.component.ActivityComponent
-import com.setyongr.pinjamin.injection.module.ActivityModule
+import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseInjectedDialog : DialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, 0)
-        val activityComponent = App.get(activity!!)
-                .appComponent
-                .activityComponent()
-                .activityModule(ActivityModule(activity!!))
-                .build()
-
-        injectModule(activityComponent)
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
-
-    abstract fun injectModule(activityComponent: ActivityComponent)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(getLayout(), container, false)

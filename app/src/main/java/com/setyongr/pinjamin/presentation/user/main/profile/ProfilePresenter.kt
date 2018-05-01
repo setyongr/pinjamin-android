@@ -16,7 +16,7 @@ import java.io.File
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor(
-        private val activity: Activity,
+        private val fragment: ProfileFragment,// TODO: Handle this please
         private val currentUserUseCase: CurrentUserUseCase,
         private val updateUserImageUseCase: UpdateUserImageUseCase,
         private val schedulerProvider: SchedulerProvider,
@@ -27,7 +27,7 @@ class ProfilePresenter @Inject constructor(
         getView().showLoading(true)
 
         val imageParam = UpdateUserImageUseCase.ImageParam("avatar",
-                Compressor(activity).compressToFile(file))
+                Compressor(fragment.activity).compressToFile(file))
 
         disposables += updateUserImageUseCase.execute(imageParam)
                 .subscribeBy(
@@ -49,7 +49,7 @@ class ProfilePresenter @Inject constructor(
     }
 
     fun pickGallery(preferedResult: Int) {
-        RxPaparazzo.single(activity)
+        RxPaparazzo.single(fragment.activity)
                 .usingGallery()
                 .applyDefaultSchedulers(schedulerProvider)
                 .subscribe(
@@ -65,7 +65,7 @@ class ProfilePresenter @Inject constructor(
     }
 
     fun pickCamera(preferedResult: Int) {
-        RxPaparazzo.single(activity)
+        RxPaparazzo.single(fragment.activity)
                 .usingCamera()
                 .applyDefaultSchedulers(schedulerProvider)
                 .subscribe(

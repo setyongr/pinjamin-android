@@ -8,7 +8,6 @@ import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.domain.model.Pinjaman
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.PinjamanAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
@@ -51,10 +50,6 @@ class HomeFragment: BaseInjectedFragment(), HomeView {
             mPresenter.clear()
             mPresenter.getRemote()
         }
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

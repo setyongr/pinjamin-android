@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class CreatePinjamanPresenter @Inject constructor(
         private val createPinjamanUseCase: CreatePinjamanUseCase,
-        private val activity: Activity,
+        private val activity: CreatePinjamanActivity, // TODO: Handle this please!
         private val schedulerProvider: SchedulerProvider
 ): BaseRxPresenter<CreatePinjamanView>() {
     var imageFile: File? = null

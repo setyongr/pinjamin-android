@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.partner.pinjaman.PartnerPinjamanFragment
 import com.setyongr.pinjamin.presentation.partner.order.PartnerOrderFragment
 import kotlinx.android.synthetic.main.activity_pinjamin.*
@@ -68,10 +67,6 @@ class PartnerActivity: BaseInjectedActivity() {
         if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver)
         }
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     inner class PinjamPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

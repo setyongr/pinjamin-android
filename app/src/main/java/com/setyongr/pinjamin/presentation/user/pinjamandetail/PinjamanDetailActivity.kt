@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import javax.inject.Inject
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -133,9 +132,6 @@ class PinjamanDetailActivity: BaseInjectedActivity() {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:" + hp.text)
         startActivity(intent)
-    }
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
 }

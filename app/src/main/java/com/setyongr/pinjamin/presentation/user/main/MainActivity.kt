@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
+import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.pinjamin.presentation.user.main.home.HomeFragment
 import com.setyongr.pinjamin.presentation.user.main.order.OrderFragment
 import com.setyongr.pinjamin.presentation.user.main.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseInjectedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

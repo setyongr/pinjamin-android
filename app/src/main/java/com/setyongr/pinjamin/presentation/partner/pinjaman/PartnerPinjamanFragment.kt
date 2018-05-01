@@ -9,7 +9,6 @@ import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.domain.model.Pinjaman
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.MyPinjamanAdapter
 import com.setyongr.pinjamin.presentation.partner.createpinjaman.CreatePinjamanActivity
 import kotlinx.android.synthetic.main.fragment_partner_pinjaman.*
@@ -58,10 +57,6 @@ class PartnerPinjamanFragment: BaseInjectedFragment(), PartnerPinjamanView {
         fab.setOnClickListener {
             context?.startActivity(Intent(context, CreatePinjamanActivity::class.java))
         }
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

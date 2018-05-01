@@ -11,7 +11,6 @@ import com.setyongr.data.remote.PinjaminService
 import com.setyongr.domain.interactor.order.PlaceOrderUseCase
 import com.setyongr.domain.interactor.pinjaman.GetPinjamanByIdUseCase
 import com.setyongr.domain.model.Pinjaman
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_order.*
 import javax.inject.Inject
@@ -26,11 +25,6 @@ class PlaceOrderActivity: BaseInjectedActivity() {
 
     @Inject
     lateinit var getPinjamanByIdUseCase: GetPinjamanByIdUseCase
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
-
 
     var progress: ProgressDialog? = null
     private var id: Int = 0

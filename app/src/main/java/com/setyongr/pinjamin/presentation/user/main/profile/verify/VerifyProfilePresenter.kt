@@ -15,7 +15,7 @@ import java.io.File
 import javax.inject.Inject
 
 class VerifyProfilePresenter @Inject constructor(
-        private val activity: Activity,
+        private val activity: VerifyProfileActivity, // TODO: Handle this please
         private val appState: AppState,
         private val schedulerProvider: SchedulerProvider,
         private val updateUserImageUseCase: UpdateUserImageUseCase

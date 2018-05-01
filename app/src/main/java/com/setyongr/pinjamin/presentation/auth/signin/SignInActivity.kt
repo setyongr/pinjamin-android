@@ -7,7 +7,6 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.pinjamin.common.hideKeyboard
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.user.main.MainActivity
 import kotlinx.android.synthetic.main.activity_signin.*
 import javax.inject.Inject
@@ -33,10 +32,6 @@ class SignInActivity: BaseInjectedActivity(), SignInView {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.detachView()
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showToast(message: String) {

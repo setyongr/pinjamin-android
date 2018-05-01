@@ -8,7 +8,6 @@ import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseActivity
 import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.domain.model.Order
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.adapter.OrderToMeAdapter
 import kotlinx.android.synthetic.main.fragment_order_to_me.*
 import javax.inject.Inject
@@ -59,9 +58,6 @@ class PartnerOrderFragment: BaseInjectedFragment(), PartnerOrderView {
         super.onDestroyView()
         adapter.clear()
         mPresenter.clear()
-    }
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

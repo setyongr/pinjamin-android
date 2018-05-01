@@ -22,17 +22,10 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AppModule(val app: Application) {
+class AppModule {
 
     @Provides
-    fun provideApplication(): Application = app
-
-    @Provides
-    @ApplicationContext
-    fun provideContext(): Context = app
-
-    @Provides
-    fun provideSharedPreferences(@ApplicationContext context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
+    fun provideSharedPreferences(context: Application) = PreferenceManager.getDefaultSharedPreferences(context)
 
     @Provides
     @Singleton

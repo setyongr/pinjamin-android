@@ -15,7 +15,6 @@ import com.setyongr.pinjamin.base.BaseInjectedFragment
 import com.setyongr.pinjamin.common.getBaseActivity
 import com.setyongr.pinjamin.common.loadUrl
 import com.setyongr.pinjamin.data.AppState
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import com.setyongr.pinjamin.presentation.partner.PartnerActivity
 import com.setyongr.pinjamin.presentation.auth.portal.PortalActivity
 import com.setyongr.pinjamin.presentation.user.main.profile.edit.EditProfileDialog
@@ -126,10 +125,6 @@ class ProfileFragment: BaseInjectedFragment(), ProfileView {
         val dialog = EditProfileDialog.createInstance(type)
         dialog.setTargetFragment(this, EditProfileDialog.EMAIL_TYPE)
         dialog.show(fragmentManager, "edit_profile")
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

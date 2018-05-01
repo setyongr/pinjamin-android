@@ -9,7 +9,6 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.pinjamin.common.hideKeyboard
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_signup.*
 import javax.inject.Inject
 
@@ -42,10 +41,6 @@ class SignUpActivity: BaseInjectedActivity(), SignUpView {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.detachView()
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

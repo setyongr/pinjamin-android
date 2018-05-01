@@ -19,7 +19,6 @@ import com.setyongr.domain.model.OrderStatus
 import com.setyongr.domain.interactor.order.GetOrderByIdUseCase
 import com.setyongr.domain.model.Order
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_order_detail.*
 import javax.inject.Inject
@@ -33,10 +32,6 @@ class OrderDetailActivity: BaseInjectedActivity() {
 
     var progress: ProgressDialog? = null
     private var id: Int = 0
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,13 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_point.*
 
 class PointActivity: BaseInjectedActivity() {
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

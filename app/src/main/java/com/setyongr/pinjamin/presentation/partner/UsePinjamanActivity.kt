@@ -13,7 +13,6 @@ import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.domain.model.OrderStatus
 import com.setyongr.domain.interactor.order.partner.UpdateOrderUseCase
 import com.setyongr.domain.model.OrderUpdate
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import org.joda.time.DateTime
 import java.util.*
@@ -61,10 +60,6 @@ class UsePinjamanActivity: BaseInjectedActivity(), ZXingScannerView.ResultHandle
         } else {
             Toast.makeText(this, "Invalid Code!", Toast.LENGTH_LONG).show()
         }
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     fun use() {

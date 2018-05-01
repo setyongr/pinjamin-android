@@ -3,16 +3,10 @@ package com.setyongr.pinjamin.presentation.user.main.profile.edit
 import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.EditText
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedDialog
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.dialog_edit_profile.*
 import javax.inject.Inject
 
@@ -60,9 +54,6 @@ class EditProfileDialog : BaseInjectedDialog(), EditProfileView {
 
     override fun getLayout(): Int = R.layout.dialog_edit_profile
 
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

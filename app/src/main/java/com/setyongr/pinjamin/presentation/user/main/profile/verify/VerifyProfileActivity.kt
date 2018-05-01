@@ -10,7 +10,6 @@ import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.domain.model.User
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_verify_profile.*
 import javax.inject.Inject
 
@@ -79,10 +78,6 @@ class VerifyProfileActivity: BaseInjectedActivity(), VerifyProfileView {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.detachView()
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showUser(user: User?) {

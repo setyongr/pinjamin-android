@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import javax.inject.Inject
 import android.graphics.BitmapFactory
 import android.support.v7.app.AlertDialog
@@ -76,11 +75,6 @@ class PartnerPinjamanDetailActivity: BaseInjectedActivity(), PartnerPinjamanDeta
         title_input.editText?.setText(pinjaman.name)
         description_input.editText?.setText(pinjaman.deskripsi)
         pinjam_image.loadUrl(pinjaman.image)
-    }
-
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showError(e: Throwable) {

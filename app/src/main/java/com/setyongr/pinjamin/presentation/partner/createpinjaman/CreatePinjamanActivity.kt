@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.domain.model.Pinjaman
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import kotlinx.android.synthetic.main.activity_create_pinjaman.*
 import java.io.File
 import javax.inject.Inject
@@ -55,10 +54,6 @@ class CreatePinjamanActivity : BaseInjectedActivity(), CreatePinjamanView {
             mPresenter.save(title_input.editText?.text.toString(), description_input.editText?.text.toString())
         }
 
-    }
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
     }
 
     override fun showLoading(status: Boolean) {

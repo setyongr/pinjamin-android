@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.base.BaseInjectedActivity
 import com.setyongr.data.remote.PinjaminService
-import com.setyongr.pinjamin.injection.component.ActivityComponent
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
@@ -185,10 +184,6 @@ class PartnerOrderDetaillActivity: BaseInjectedActivity() {
         }
     }
 
-
-    override fun injectModule(activityComponent: ActivityComponent) {
-        activityComponent.inject(this)
-    }
 
     fun sendEmail() {
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts(

@@ -1,21 +1,11 @@
 package com.setyongr.pinjamin.base
 
-import android.os.Bundle
-import com.setyongr.pinjamin.App
-import com.setyongr.pinjamin.injection.component.ActivityComponent
-import com.setyongr.pinjamin.injection.module.ActivityModule
+import android.content.Context
+import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseInjectedFragment: BaseFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val activityComponent = App.get(activity!!)
-                .appComponent
-                .activityComponent()
-                .activityModule(ActivityModule(activity!!))
-                .build()
-
-        injectModule(activityComponent)
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
     }
-
-    abstract fun injectModule(activityComponent: ActivityComponent)
 }

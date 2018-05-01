@@ -19,7 +19,7 @@ class ParnetPinjamanDetailPresenter @Inject constructor(
         private val updatePinjamanUseCase: UpdatePinjamanUseCase,
         private val deletePinjamanUseCase: DeletePinjamanUseCase,
         private val getPinjamanByIdUseCase: GetPinjamanByIdUseCase,
-        private val activity: Activity,
+        private val activity: PartnerPinjamanDetailActivity, // TODO: Handle this please
         private val schedulerProvider: SchedulerProvider
 ): BaseRxPresenter<PartnerPinjamanDetailView>() {
     var imageFile: File? = null

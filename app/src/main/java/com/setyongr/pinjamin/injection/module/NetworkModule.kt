@@ -10,5 +10,5 @@ import javax.inject.Singleton
 class NetworkModule{
     @Provides
     @Singleton
-    fun provideMovieService(tokenProvider: TokenProvider) : PinjaminService = PinjaminService.create(tokenProvider)
+    fun providePinjaminService(tokenProvider: TokenProvider) : PinjaminService = PinjaminService.create(tokenProvider)
 }
