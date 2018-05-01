@@ -9,7 +9,7 @@ import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.common.inflate
 import com.setyongr.domain.model.OrderStatus
 import com.setyongr.domain.model.Order
-import com.setyongr.pinjamin.presentation.pinjamin.OrderToMeDetailActivity
+import com.setyongr.pinjamin.presentation.partner.PartnerOrderDetaillActivity
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.item_order.view.*
 import org.joda.time.format.DateTimeFormat
@@ -82,7 +82,7 @@ class OrderToMeAdapter @Inject constructor() : RecyclerView.Adapter<RecyclerView
             }
 
             itemView.setOnClickListener {
-                val intent = Intent(context, OrderToMeDetailActivity::class.java)
+                val intent = Intent(context, PartnerOrderDetaillActivity::class.java)
                 intent.putExtra("id", data.id)
                 context.startActivity(intent)
             }

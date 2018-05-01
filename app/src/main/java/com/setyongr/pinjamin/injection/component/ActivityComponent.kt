@@ -2,25 +2,25 @@ package com.setyongr.pinjamin.injection.component
 
 import com.setyongr.pinjamin.injection.PerActivity
 import com.setyongr.pinjamin.injection.module.ActivityModule
-import com.setyongr.pinjamin.presentation.detail.DetailActivity
-import com.setyongr.pinjamin.presentation.main.home.HomeFragment
-import com.setyongr.pinjamin.presentation.main.order.OrderFragment
-import com.setyongr.pinjamin.presentation.pinjamin.mypinjaman.MyPinjamanFragment
-import com.setyongr.pinjamin.presentation.pinjamin.ordertome.OrderToMeFragment
-import com.setyongr.pinjamin.presentation.main.profile.ProfileFragment
-import com.setyongr.pinjamin.presentation.main.profile.edit.EditProfileDialog
-import com.setyongr.pinjamin.presentation.main.profile.verify.VerifyProfileActivity
-import com.setyongr.pinjamin.presentation.mydetail.MyDetailActivity
-import com.setyongr.pinjamin.presentation.order.OrderActivity
-import com.setyongr.pinjamin.presentation.orderdetail.QrViewerActivity
-import com.setyongr.pinjamin.presentation.pinjamin.OrderToMeDetailActivity
-import com.setyongr.pinjamin.presentation.pinjamin.PinjaminActivity
-import com.setyongr.pinjamin.presentation.pinjamin.UsePinjamanActivity
-import com.setyongr.pinjamin.presentation.pinjamin.addpinjaman.AddPinjamanActivity
-import com.setyongr.pinjamin.presentation.point.PointActivity
-import com.setyongr.pinjamin.presentation.portal.PortalActivity
-import com.setyongr.pinjamin.presentation.signin.SignInActivity
-import com.setyongr.pinjamin.presentation.signup.SignUpActivity
+import com.setyongr.pinjamin.presentation.partner.pinjaman.PartnerPinjamanFragment
+import com.setyongr.pinjamin.presentation.partner.order.PartnerOrderFragment
+import com.setyongr.pinjamin.presentation.partner.PartnerOrderDetaillActivity
+import com.setyongr.pinjamin.presentation.partner.PartnerActivity
+import com.setyongr.pinjamin.presentation.partner.UsePinjamanActivity
+import com.setyongr.pinjamin.presentation.partner.createpinjaman.CreatePinjamanActivity
+import com.setyongr.pinjamin.presentation.auth.portal.PortalActivity
+import com.setyongr.pinjamin.presentation.auth.signin.SignInActivity
+import com.setyongr.pinjamin.presentation.auth.signup.SignUpActivity
+import com.setyongr.pinjamin.presentation.partner.pinjamandetail.PartnerPinjamanDetailActivity
+import com.setyongr.pinjamin.presentation.user.main.home.HomeFragment
+import com.setyongr.pinjamin.presentation.user.main.order.OrderFragment
+import com.setyongr.pinjamin.presentation.user.main.profile.ProfileFragment
+import com.setyongr.pinjamin.presentation.user.main.profile.edit.EditProfileDialog
+import com.setyongr.pinjamin.presentation.user.main.profile.verify.VerifyProfileActivity
+import com.setyongr.pinjamin.presentation.user.orderdetail.OrderDetailActivity
+import com.setyongr.pinjamin.presentation.user.pinjamandetail.PinjamanDetailActivity
+import com.setyongr.pinjamin.presentation.user.placeorder.PlaceOrderActivity
+import com.setyongr.pinjamin.presentation.user.point.PointActivity
 import dagger.Subcomponent
 
 
@@ -38,22 +38,22 @@ interface ActivityComponent {
     fun inject(signInActivity: SignInActivity)
     fun inject(signUpActivity: SignUpActivity)
     fun inject(portalActivity: PortalActivity)
-    fun inject(detailActivity: DetailActivity)
-    fun inject(myDetailActivity: MyDetailActivity)
-    fun inject(orderActivity: OrderActivity)
-    fun inject(orderToMeDetailActivity: OrderToMeDetailActivity)
+    fun inject(pinjamanDetailActivity: PinjamanDetailActivity)
+    fun inject(placeOrderActivity: PlaceOrderActivity)
+    fun inject(partnerOrderDetaillActivity: PartnerOrderDetaillActivity)
     fun inject(verifyProfileActivity: VerifyProfileActivity)
-    fun inject(addPinjamanActivity: AddPinjamanActivity)
-    fun inject(pinjaminActivity: PinjaminActivity)
-    fun inject(qrViewerActivity: QrViewerActivity)
+    fun inject(createPinjamanActivity: CreatePinjamanActivity)
+    fun inject(partnerActivity: PartnerActivity)
+    fun inject(orderDetailActivity: OrderDetailActivity)
     fun inject(usePinjamanActivity: UsePinjamanActivity)
     fun inject(pointActivity: PointActivity)
+    fun inject(partnerPinjamanDetailActivity: PartnerPinjamanDetailActivity)
 
     fun inject(homeFragment: HomeFragment)
     fun inject(profileFragment: ProfileFragment)
     fun inject(orderFragment: OrderFragment)
-    fun inject(orderToMeFragment: OrderToMeFragment)
-    fun inject(myPinjamanFragment: MyPinjamanFragment)
+    fun inject(orderToMeFragment: PartnerOrderFragment)
+    fun inject(partnerPinjamanFragment: PartnerPinjamanFragment)
 
     fun inject(editProfileDialog: EditProfileDialog)
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColor">
@@ -40,7 +39,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/lato"
-        android:text="Orders"
+        android:text="@string/orders"
         android:textColor="@color/colorGreyDark"
         android:textSize="25sp"
         android:textStyle="bold"

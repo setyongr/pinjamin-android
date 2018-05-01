@@ -33,7 +33,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/lato"
-                android:text="Name"
+                android:text="@string/name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 card_view:layout_constraintStart_toEndOf="@+id/side_view"
@@ -55,7 +55,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/lato_light"
-                    android:text="Senin, 13 Oktober 2017"/>
+                    tools:text="Senin, 13 Oktober 2017"/>
 
                 <TextView
                     android:id="@+id/time_text2"
@@ -64,7 +64,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/lato_light"
-                    android:text="Senin, 13 Oktober 2017"
+                    tools:text="Senin, 13 Oktober 2017"
                     android:visibility="gone" />
 
                 <TextView
@@ -74,7 +74,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/lato_light"
-                    android:text="Senin, 13 Oktober 2017"
+                    tools:text="Senin, 13 Oktober 2017"
                     android:visibility="gone"/>
             </LinearLayout>
 
@@ -87,9 +87,9 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/colorGreen"
                 android:padding="8dp"
-                android:text="ACCEPTED"
+                tools:text="ACCEPTED"
                 android:fontFamily="@font/lato"
-                android:drawableLeft="@drawable/green_circle"
+                android:drawableStart="@drawable/green_circle"
                 android:drawablePadding="5dp"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent" />

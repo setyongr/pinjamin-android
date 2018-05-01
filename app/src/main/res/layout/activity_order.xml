@@ -29,7 +29,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -48,10 +48,10 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/lato"
                 android:layout_marginBottom="16dp"
-                android:text="Order Pinjaman"
+                android:text="@string/order_pinjaman"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:hint="Pesan (Ex: Pinjam yang hijau)"
+            android:hint="@string/message_hint"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <android.support.design.widget.TextInputEditText
@@ -139,7 +139,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/btn_primary"
-            android:text="Order"
+            android:text="@string/order"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +152,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="* Barang yang dipinjam merupakan tanggung jawab peminjam dan pemilik"
+            android:text="@string/order_tos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/message_text" />

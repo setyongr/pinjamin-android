@@ -28,7 +28,8 @@
                card_view:layout_constraintEnd_toEndOf="parent"
                card_view:layout_constraintStart_toStartOf="parent"
                card_view:layout_constraintTop_toTopOf="parent"
-               card_view:srcCompat="@drawable/ic_launcher_background" />
+               card_view:srcCompat="@drawable/ic_launcher_background"
+               android:contentDescription="@string/sewa_description" />
 
            <TextView
                android:id="@+id/user_text"
@@ -43,10 +44,10 @@
                android:paddingBottom="5dp"
                android:background="@drawable/gray_rect"
                android:textColor="@color/primaryColor"
-               android:drawableLeft="@drawable/ic_person_white_8dp"
+               android:drawableStart="@drawable/ic_person_white_8dp"
                android:drawablePadding="5dp"
-               android:text="Setyo Nu"
-               android:textSize="10sp"
+               tools:text="Setyo Nu"
+               android:textSize="12sp"
                card_view:layout_constraintBottom_toBottomOf="@+id/sewa_image"
                card_view:layout_constraintEnd_toEndOf="@+id/sewa_image" />
 
@@ -54,27 +55,15 @@
                android:id="@+id/name_text"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
+               android:layout_marginBottom="16dp"
                android:layout_marginStart="24dp"
                android:layout_marginTop="16dp"
-               android:text="Sewa motor gaul"
+               tools:text="Sewa motor gaul"
                android:textStyle="bold"
+               card_view:layout_constraintBottom_toBottomOf="parent"
                card_view:layout_constraintStart_toStartOf="parent"
                card_view:layout_constraintTop_toBottomOf="@+id/sewa_image" />
 
-           <TextView
-               android:id="@+id/distance_text"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginBottom="16dp"
-               android:layout_marginStart="24dp"
-               android:layout_marginTop="8dp"
-               android:drawableLeft="@drawable/ic_location_on_black_24dp"
-               android:gravity="center"
-               android:text="1Km"
-               android:textSize="10sp"
-               card_view:layout_constraintBottom_toBottomOf="parent"
-               card_view:layout_constraintStart_toStartOf="parent"
-               card_view:layout_constraintTop_toBottomOf="@+id/name_text" />
 
        </android.support.constraint.ConstraintLayout>
 

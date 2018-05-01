@@ -24,7 +24,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
-        <activity android:name=".presentation.portal.PortalActivity" >
+        <activity android:name="com.setyongr.pinjamin.presentation.auth.portal.PortalActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,40 +32,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.setyongr.pinjamin.presentation.main.MainActivity"
+            android:name="com.setyongr.pinjamin.presentation.user.main.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".presentation.signin.SignInActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.auth.signin.SignInActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name="com.setyongr.pinjamin.presentation.signup.SignUpActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.auth.signup.SignUpActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.detail.DetailActivity"
+        <activity android:name=".presentation.user.pinjamandetail.PinjamanDetailActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.mydetail.MyDetailActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.partner.pinjamandetail.PartnerPinjamanDetailActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.order.OrderActivity"
+        <activity android:name=".presentation.user.placeorder.PlaceOrderActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name="com.setyongr.pinjamin.presentation.pinjamin.OrderToMeDetailActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.partner.PartnerOrderDetaillActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name="com.setyongr.pinjamin.presentation.main.profile.verify.VerifyProfileActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.user.main.profile.verify.VerifyProfileActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name="com.setyongr.pinjamin.presentation.pinjamin.PinjaminActivity"
+        <activity android:name="com.setyongr.pinjamin.presentation.partner.PartnerActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.pinjamin.addpinjaman.AddPinjamanActivity"
+        <activity android:name=".presentation.partner.createpinjaman.CreatePinjamanActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".presentation.orderdetail.QrViewerActivity" />
-        <activity android:name=".presentation.pinjamin.UsePinjamanActivity" />
-        <activity android:name=".presentation.point.PointActivity" />
+        <activity android:name=".presentation.user.orderdetail.OrderDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presentation.partner.UsePinjamanActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presentation.user.point.PointActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

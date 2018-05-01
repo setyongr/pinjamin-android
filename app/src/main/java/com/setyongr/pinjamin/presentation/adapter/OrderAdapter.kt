@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.common.inflate
 import com.setyongr.domain.model.OrderStatus
-import com.setyongr.data.remote.models.ResponseModel
 import com.setyongr.domain.model.Order
-import com.setyongr.pinjamin.presentation.orderdetail.QrViewerActivity
+import com.setyongr.pinjamin.presentation.user.orderdetail.OrderDetailActivity
 import kotlinx.android.synthetic.main.item_order.view.*
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.ISODateTimeFormat
@@ -107,7 +106,7 @@ class OrderAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
             itemView.setOnClickListener {
-                QrViewerActivity.open(context, data.id)
+                OrderDetailActivity.open(context, data.id)
             }
         }
     }

@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.setyongr.pinjamin.R
 import com.setyongr.pinjamin.common.inflate
-import com.setyongr.data.remote.models.ResponseModel
 import com.setyongr.domain.model.Pinjaman
 import com.setyongr.pinjamin.common.loadUrl
-import com.setyongr.pinjamin.presentation.mydetail.MyDetailActivity
+import com.setyongr.pinjamin.presentation.partner.pinjamandetail.PartnerPinjamanDetailActivity
 import kotlinx.android.synthetic.main.item_pinjaman.view.*
 
 class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,7 +44,7 @@ class MyPinjamanAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             sewa_image.loadUrl(data.image)
 
             itemView.setOnClickListener {
-                val intent = Intent(context, MyDetailActivity::class.java)
+                val intent = Intent(context, PartnerPinjamanDetailActivity::class.java)
                 intent.putExtra("id", data.id)
                 context.startActivity(intent)
             }
